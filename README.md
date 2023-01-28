@@ -8,7 +8,7 @@ python3 glados-tts/glados.py
 
 the TTS Engine can also be used remotely on a machine more powerful then the Pi to process in house TTS: (executed from glados-tts directory
 ```console
-python3 engine-remote.py
+python3 engine.py
 ```
 
 Default port is 8124
@@ -27,21 +27,10 @@ The initial, regular Tacotron model was trained first on LJSpeech, and then on a
 
 
 
-## Installation Instruction
-If you want to install the TTS Engine on your machine, please follow the steps
+## Usage Instructions
+If you want to install the TTS Engine on your machine in a Docker container, please follow the steps
 below.
 
-1. Install the [`espeak`](https://github.com/espeak-ng/espeak-ng) synthesizer
-   according to the [installation
-   instructions](https://github.com/espeak-ng/espeak-ng/blob/master/docs/guide.md)
-   for your operating system.
-2. Install the required Python packages, e.g., by running `pip install -r
-   requirements.txt`
-   
-## TTS Voice Wizard Instructions
-- Follow the above installation instructions
-- To use glados TTS for TTS Voice Wizard run this
-```console
-python3 engine-TTSVoiceWizard.py
-```
-
+1. Install Docker for Windows https://docs.docker.com/desktop/install/windows-install/
+2. For first run, the command is `docker run -it -p 8124:8124 --name glados-tts diekatzchen/glados-tts-voice-wizard:1.0.0`
+3. For subsequent runs, you only need `docker start -i glados-tts`
