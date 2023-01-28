@@ -1,10 +1,24 @@
-FROM rkttu/python-nanoserver:3.7.9_2009
+FROM python:3.7.9-windowsservercore-1809
+#FROM rkttu/python-nanoserver:3.7.9_2009
 
-RUN mkdir -p c:/libraries
+ADD https://aka.ms/vs/16/release/vc_redist.x64.exe /vc_redist.exe
+RUN C:\vc_redist.exe /quiet /install
 
-WORKDIR c:/libraries
+RUN mkdir -p c:\\tts
 
-ADD ./eSpeakNG c:/libraries
+COPY . c:/tts/
 
-ENV PHONEMIZER_ESPEAK_LIBRARY='c:/libraries/eSpeakNG/libespeak-ng.dll' PHONEMIZER_ESPEAK_PATH='c:/libraries/eSpeakNG/espeak-ng.exe'
+ENV PHONEMIZER_ESPEAK_LIBRARY='c:/Program Files/eSpeak NG/libespeak-ng.dll' PHONEMIZER_ESPEAK_PATH='c:/Program Files/eSpeak NG/eSpeakNG/espeak-ng.exe' 
+#ESPEAK_DATA_PATH=c:/tts/eSpeakNG/espeak-ng-data
 
+ADD https://github.com/espeak-ng/espeak-ng/releases/download/1.51/espeak-ng-X64.msi /espeak-ng-X64.msi
+RUN C:\espeak-ng-X64.msi /quiet
+
+WORKDIR c:/tts/
+
+RUN pip install -r c:/tts/requirements.txt
+
+EXPOSE 8124
+
+ENTRYPOINT ["c:\\python\\python.exe"]
+CMD ["engine-TTSVoiceWizard.py"]
