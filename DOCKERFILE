@@ -1,0 +1,10 @@
+FROM rkttu/python-nanoserver:3.7.9_2009
+
+RUN mkdir -p c:/libraries
+
+WORKDIR c:/libraries
+
+ADD ./eSpeakNG c:/libraries
+
+ENV PHONEMIZER_ESPEAK_LIBRARY='c:/libraries/eSpeakNG/libespeak-ng.dll' PHONEMIZER_ESPEAK_PATH='c:/libraries/eSpeakNG/espeak-ng.exe'
+
